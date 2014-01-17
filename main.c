@@ -14,3 +14,7 @@ char familia;
 int passageiros;
 int indice;
 } ListaAviao;
+
+int main () {
+	return 0;
+}
