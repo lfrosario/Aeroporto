@@ -77,8 +77,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	}
 }
 
-int remove (char letra, int numPassageiro, Aeroporto *l){
-	
+int remover (char letra, int numPassageiro, Aeroporto *l) {
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm ; 
 	int resposta;
@@ -88,24 +87,19 @@ int remove (char letra, int numPassageiro, Aeroporto *l){
 		garagemProx=l;
 		auxiliar=NULL;
 		while(garagemProx->prox!=NULL){
-		
-		if (garagemProx->garagem==resposta){
-						
-			auxiliar->prox=garagemProx->prox; 
-			aviaoRm=garagemProx->aviao;
-			free(aviaoRm); 
-			free(garagemProx);
-			for(k=auxiliar->prox; k!=NULL; k=k->prox){
-				k->garagem = k->garagem-1;
-			 
+			if (garagemProx->garagem==resposta){	
+				auxiliar->prox=garagemProx->prox; 
+				aviaoRm=garagemProx->aviao;
+				free(aviaoRm); 
+				free(garagemProx);
+				for(k=auxiliar->prox; k!=NULL; k=k->prox){
+					k->garagem = k->garagem-1; 
+				}
+				return 1;
+			}else{ 
+				auxiliar = garagemProx;
+				garagemProx=garagemProx->prox;
 			}
-			return 1;
-		
-		}else{ 
-			auxiliar = garagemProx;
-			garagemProx=garagemProx->prox;
-		}
-		
 		}
 	}
 	return 0;
