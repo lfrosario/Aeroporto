@@ -5,13 +5,7 @@
 #include <unistd.h>
 
 int capacidade = 20;
-int indice = 0;
-
-typedef struct Listanome *aeroporto;
-typedef struct Listanome *listaaviao;
-
-int capacidade=20;
-int indice=0;  
+int indice = 0;  
 
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
@@ -54,12 +48,12 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	Aeroporto *garagemProx, *hangar;
 	int resposta;
 	resposta = consulta(letra,numPassageiro,l);
-	if (resposta==0){
+	if (resposta == 0 && capacidade > 0){
 		novo = (ListaAviao*)malloc(sizeof(ListaAviao));
 		novo->familia=letra;
 		novo->passageiros=numPassageiro; 	
 		novo->posicao=indice +1; 
-		indice=novo->posicao; 
+		indice=novo->posicao;
 		if (l==NULL){
 			hangar = (Aeroporto*)malloc(sizeof(Aeroporto));
 			hangar->garagem=indice;
@@ -79,7 +73,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 				garagemProx->prox=hangar;
 			}
 		}
-			
+	capacidade--;			
 	}
 }
 
@@ -122,7 +116,15 @@ int remove (char letra, int numPassageiro, Aeroporto *l){
 
 
 void imprime (Aeroporto l) {
-	while (l) {}
+	Aeroporto *listar;
+	listar = l;
+
+	if (l == NULL)
+		printf ("\n LISTA VAZIA\n");
+
+	while (listar != NULL)
+		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->aviao->familia, listar->aviao->passageiros);
+
 }
 
 int main(){
