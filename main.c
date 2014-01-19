@@ -56,7 +56,18 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 			
 	}
 }
+
+void remove (char letra, int numPassageiro, Aeroporto *l){
+	Aeroporto *garagemProx, *hangar;
+	int resposta;
+	int garagem;
+	char = chaveFamilia;
+	int = chavePassageiros;
 	
+	if ((l!=NULL) && (consulta!=0))
+		garagemProx->prox=hangar->prox;
+		free
+}
 
 int main(){
 	Aeroporto l;
