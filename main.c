@@ -7,11 +7,11 @@
 int capacidade=20;
 int indice=0;
 
-typedef struct Aeroporto{
-struct ListaAviao *aviao;
-struct Aeroporto *prox;
-int garagem;
-}Aeroporto;
+typedef struct Aeroporto {
+	struct ListaAviao *aviao;
+	struct Aeroporto *prox;
+	int garagem;
+} Aeroporto;
 
 typedef struct ListaAviao{
 char familia;
@@ -85,5 +85,5 @@ void main(){
 		//ordena();
 		
 	}	
-return;
+return 0;
 }
