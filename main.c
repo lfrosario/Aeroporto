@@ -10,9 +10,6 @@ int indice = 0;
 typedef struct Listanome *aeroporto;
 typedef struct Listanome *listaaviao;
 
-int capacidade=20;
-int indice=0;
-
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
 	struct Aeroporto *prox;
@@ -97,7 +94,15 @@ void remove (char letra, int numPassageiro, Aeroporto *l){
 
 
 void imprime (Aeroporto l) {
-	while (l) {}
+	Aeroporto *listar;
+	listar = l;
+
+	if (l == NULL)
+		printf ("\n LISTA VAZIA\n");
+
+	while (listar != NULL)
+		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->aviao->familia, listar->aviao->passageiros);
+
 }
 
 int main(){
