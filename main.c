@@ -11,18 +11,18 @@ typedef struct Listanome *aeroporto;
 typedef struct Listanome *listaaviao;
 
 int capacidade=20;
-int indice=0;
+int indice=0;  
 
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
 	struct Aeroporto *prox;
-	int garagem;
+	int garagem;  //Idenficador da Garagem
 }Aeroporto;
 
 typedef struct ListaAviao {
 	char familia;
 	int passageiros;
-	int posicao;
+	int posicao;  //Identificação do avião conforme ordem de pouso
 }ListaAviao;
 
 void inicializarAeroporto (Aeroporto *l) {
@@ -83,16 +83,41 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	}
 }
 
-void remove (char letra, int numPassageiro, Aeroporto *l){
-	Aeroporto *garagemProx, *hangar;
+int remove (char letra, int numPassageiro, Aeroporto *l){
+	Aeroporto *garagemProx, *auxiliar, *k;
+	ListaAviao *aviaoRm ; 
 	int resposta;
-	int garagem;
-	char = chaveFamilia;
-	int = chavePassageiros;
+	resposta = consulta(letra, numPassageiro, l); 
 	
-	if ((l!=NULL) && (consulta!=0))
-		garagemProx->prox=hangar->prox;
-		free
+	if (resposta!=0){
+		garagemProx=l;
+		auxiliar==NULL;
+		while(garagemProx->prox!=NULL){
+		
+		if (garagemProx->garagem==resposta){
+						
+			auxiliar->prox=garagemProx->prox; 
+			aviaoRm=garagemProx->aviao;
+			free(aviaoRm); 
+			free(garagemProx);
+			
+			for(k=auxiliar->prox, k!=NULL, k=k->prox){
+				k->garagem = k->garagem-1;
+			 
+			}
+			return 
+		
+		}else{ 
+			auxiliar=garagem->prox;
+			garagemProx=garagemProx->prox;
+		}
+		
+		return 1;
+	}	
+	
+	else 
+	return 0;		
+		
 }
 
 
