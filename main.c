@@ -24,8 +24,6 @@ l=NULL;
 
 void insere (char letra, int numPassageiro, Aeroporto *l){
 	ListaAviao *novo;
-	Aeroporto void insere (char letra, int numPassageiro, Aeroporto *l)
-	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
 	int resposta;
 	resposta = consulta(l);
