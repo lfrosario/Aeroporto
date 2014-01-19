@@ -90,7 +90,7 @@ void remove (char letra, int numPassageiro, Aeroporto *l){
 }
 
 
-void imprime (Aeroporto l) {
+void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
 
