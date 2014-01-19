@@ -4,23 +4,26 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-int capacidade=20;
-int indice=0;
+int capacidade = 20;
+int indice = 0;
+
 typedef struct Listanome *aeroporto;
 typedef struct Listanome *listaaviao;
+
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
 	struct Aeroporto *prox;
 	int garagem;
-} Aeroporto;
+}Aeroporto;
 
-typedef struct ListaAviao{
-char familia;
-int passageiros;
-int posicao;
-} ListaAviao;
-void inicializarAeroporto(Aeroporto *l){
-l=NULL;	
+typedef struct ListaAviao {
+	char familia;
+	int passageiros;
+	int posicao;
+}ListaAviao;
+
+void inicializarAeroporto (Aeroporto *l) {
+	l = NULL;	
 }
 
 void insere (char letra, int numPassageiro, Aeroporto *l){
@@ -57,7 +60,9 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	}
 }
 	
-
+void imprime (Aeroporto l) {
+	while (l) {}
+}
 int main(){
 	Aeroporto l;
 	char letra;
