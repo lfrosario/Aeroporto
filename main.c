@@ -7,12 +7,6 @@
 int capacidade = 20;
 int indice = 0;
 
-typedef struct Listanome *aeroporto;
-typedef struct Listanome *listaaviao;
-
-int capacidade=20;
-int indice=0;
-
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
 	struct Aeroporto *prox;
