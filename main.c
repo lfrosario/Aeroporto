@@ -48,12 +48,12 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	Aeroporto *garagemProx, *hangar;
 	int resposta;
 	resposta = consulta(letra,numPassageiro,l);
-	if (resposta==0){
+	if (resposta == 0 && capacidade > 0){
 		novo = (ListaAviao*)malloc(sizeof(ListaAviao));
 		novo->familia=letra;
 		novo->passageiros=numPassageiro; 	
 		novo->posicao=indice +1; 
-		indice=novo->posicao; 
+		indice=novo->posicao;
 		if (l==NULL){
 			hangar = (Aeroporto*)malloc(sizeof(Aeroporto));
 			hangar->garagem=indice;
@@ -73,7 +73,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 				garagemProx->prox=hangar;
 			}
 		}
-			
+	capacidade--;			
 	}
 }
 
