@@ -77,10 +77,10 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	}
 }
 
-int remove (char letra, int numPassageiro, Aeroporto *l){
+int remover (char letra, int numPassageiro, Aeroporto *l){
 	
 	Aeroporto *garagemProx, *auxiliar, *k;
-	ListaAviao *aviaoRm ; 
+	ListaAviao *aviaoRm; 
 	int resposta;
 	resposta = consulta(letra, numPassageiro, l); 
 	
