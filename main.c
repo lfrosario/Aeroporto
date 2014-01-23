@@ -22,6 +22,100 @@ typedef struct ListaAviao {
 void inicializarAeroporto (Aeroporto *l) {
 	l = NULL;	
 }
+char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
+	char letra;
+	if(x < 78){
+		if(x < 72){
+			if(x==65){
+				letra='A';
+				return letra;
+			}else if(x==66){
+				letra='B';
+				return letra;
+			}else if(x==67){
+				letra='C';
+				return letra;
+			}else if(x==68){
+				letra='D';
+				return letra;
+			}else if(x==69){
+				letra='E';
+				return letra;
+			}else if(x==70){
+				letra='F';
+				return letra;
+			}else if(x==71){
+				letra='G';
+				return letra;
+			}
+		}else{
+			if(x==72){
+				letra='H';
+				return letra;
+			}else if(x==73){
+				letra='I';
+				return letra;
+			}else if(x==74){
+				letra='J';
+				return letra;
+			}else if(x==75){
+				letra='K';
+				return letra;
+			}else if(x==76){
+				letra='L';
+				return letra;
+			}else if(x==77){
+				letra='M';
+				return letra;
+			}
+			}
+		}else{
+			if(x < 85){
+				if(x==78){
+					letra='N';
+					return letra;
+				}else if(x==79){
+					letra='O';
+					return letra;
+				}else if(x==80){
+					letra='P';
+					return letra;
+				}else if(x==81){
+					letra='Q';
+					return letra;
+				}else if(x==82){
+					letra='R';
+					return letra;
+				}else if(x==83){
+					letra='S';
+					return letra;
+				}else if(x==84){
+					letra='T';
+					return letra;
+				}
+			}else{
+				if(x==85){
+					letra='U';
+					return letra;
+				}else if(x==86){
+					letra='V';
+					return letra;
+				}else if(x==87){
+					letra='W';
+					return letra;
+				}else if(x==88){
+					letra='X';
+					return letra;
+				}else if(x==89){
+					letra='Y';
+					return letra;
+				}else if(x==90){
+					letra='Z';
+					return letra;
+				}
+			}
+	}
+}
 int consulta(char letra, int numPassageiro, Aeroporto *l){
 	Aeroporto *verificador;
 	verificador=l;
@@ -46,9 +140,9 @@ int consulta(char letra, int numPassageiro, Aeroporto *l){
 void insere (char letra, int numPassageiro, Aeroporto *l){
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
-	int resposta;
-	resposta = consulta(letra,numPassageiro,l);
-	if (resposta == 0 && capacidade > 0){
+	//int resposta;
+	//resposta = consulta(letra,numPassageiro,l);
+	if (/*resposta == 0 && */capacidade > 0){
 		novo = (ListaAviao*)malloc(sizeof(ListaAviao));
 		novo->familia=letra;
 		novo->passageiros=numPassageiro; 	
@@ -76,9 +170,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	capacidade--;			
 	}
 }
-
 int remover (char letra, int numPassageiro, Aeroporto *l){
-	
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
@@ -88,29 +180,23 @@ int remover (char letra, int numPassageiro, Aeroporto *l){
 		garagemProx=l;
 		auxiliar=NULL;
 		while(garagemProx->prox!=NULL){
-		
-		if (garagemProx->garagem==resposta){
-						
-			auxiliar->prox=garagemProx->prox; 
-			aviaoRm=garagemProx->aviao;
-			free(aviaoRm); 
-			free(garagemProx);
-			for(k=auxiliar->prox; k!=NULL; k=k->prox){
-				k->garagem = k->garagem-1;
-			 
+			if (garagemProx->garagem==resposta){	
+				auxiliar->prox=garagemProx->prox; 
+				aviaoRm=garagemProx->aviao;
+				free(aviaoRm); 
+				free(garagemProx);
+				for(k=auxiliar->prox; k!=NULL; k=k->prox){
+					k->garagem = k->garagem-1; 
+				}
+				return 1;
+			}else{ 
+				auxiliar = garagemProx;
+				garagemProx=garagemProx->prox;
 			}
-			return 1;
-		
-		}else{ 
-			auxiliar = garagemProx;
-			garagemProx=garagemProx->prox;
-		}
-		
 		}
 	}
 	return 0;
 }
-
 void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
@@ -122,14 +208,50 @@ void imprime (Aeroporto *l) {
 		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->aviao->familia, listar->aviao->passageiros);
 
 }
-
+int ordenacao(Aeroporto *l){
+	Aeroporto *prim, *seg, *ult;
+	ListaAviao *avi1, *avi2;
+	prim=seg=ult=NULL;
+	avi1=avi2=NULL;
+	prim=NULL;
+	if(l==NULL){
+		printf("Aeroporto Vazio \n");
+		return 0;
+	}else{
+		for(ult=l;ult->prox!=NULL;ult=ult->prox){
+		}
+		prim=l;
+		while(prim!=ult){
+			seg=prim->prox;
+			avi1=prim->aviao;
+			avi2=seg->aviao;
+			if(avi1->familia == avi2->familia && avi1->passageiros <= avi2->passageiros){ // São da mesma familia e comportam a mesma quantidade de passageiros
+			prim=prim->prox;	
+			}/*else if(avi1->familia==avi2->familia && avi1->passageiros < avi2->passageiros){ // São da mesma familia e AV1 suporta menos passageiros do que AV2
+				prim=prim->prox;
+			}*/else if(avi1->familia==avi2->familia && avi1->passageiros >avi2->passageiros){  // São da mesma familia e AV1 suporta mais passageiros do que AV2
+					prim->aviao=avi2;
+					seg->aviao=avi1;
+					prim=l;
+			}else if(avi1->familia < avi2->familia){ // São de familias diferente, sendo AV1  com letra menor que AV2
+			prim=prim->prox;	
+			}else if(avi1->familia > avi2->familia){  // São de familias diferente, sendo AV1  com letra maior que AV2
+					prim->aviao=avi2;
+					seg->aviao=avi1;
+					prim=l;
+			}
+		}
+	}
+	return 1;
+}
 int main(){
-	Aeroporto l;
-	char letra;
-	int numPassageiro;	
-	inicializarAeroporto(&l);
+	//Aeroporto l;
+	//char letra;
+	//int numPassageiro,letra_num;//letra_num vai recer um numero decimal e passar para função ASCII converter para letra.	
+	//inicializarAeroporto(&l);
 	while(true){
-		//letra=rand()%36+65;
+		//letra_num=rand()%36+65;
+		//letra=funcaoASCII(letra_num);
 		//numPassageiro=rand()%800;
 		//remove();
 		//letra=rand()%36+65;
