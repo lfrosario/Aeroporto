@@ -24,7 +24,6 @@ void inicializarAeroporto (Aeroporto *l) {
 	l->prox = NULL;
 	l->aviao=NULL;
 	l->garagem=0;
-	printf("AQUIII");	
 }
 char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 	char letra;
@@ -203,11 +202,13 @@ void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
 
-	if (l == NULL)
+	if (l->prox == NULL)
 		printf ("\n LISTA VAZIA\n");
 
-	while (listar != NULL)
-		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->aviao->familia, listar->aviao->passageiros);
+	while (listar->prox != NULL) {
+		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem/*,  listar->aviao->familia, listar->aviao->passageiros*/);
+		listar = listar->prox;
+	}
 
 }
 int ordenacao(Aeroporto *l){
@@ -253,8 +254,9 @@ int main(){
 	int indiceRemover; // recebe o indice que será removido
 	int numPassageiro;
 	inicializarAeroporto(&l);
+	insere ('a', 3, &l);
 	imprime(&l);
-	while(true){
+/*	while(true){ 
 		if(l.prox!=NULL){
 		printf("AQUI 2");
 		indiceRemover=rand()%+1;
@@ -279,6 +281,6 @@ int main(){
 		//insere();
 		//ordena();
 		
-	}	
+	}*/
 return 0;
 }
