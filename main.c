@@ -5,7 +5,8 @@
 #include <unistd.h>
 
 int capacidade = 20;
-int indice = 0;  
+int indice = 0;
+int posicaoAviao=0;  
 
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
@@ -20,7 +21,10 @@ typedef struct ListaAviao {
 }ListaAviao;
 
 void inicializarAeroporto (Aeroporto *l) {
-	l = NULL;	
+	l->prox = NULL;
+	l->aviao=NULL;
+	l->garagem=0;
+	printf("AQUIII");	
 }
 char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 	char letra;
@@ -116,17 +120,15 @@ char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 			}
 	}
 }
-int consulta(char letra, int numPassageiro, Aeroporto *l){
+int consulta(int indice, Aeroporto *l){
 	Aeroporto *verificador;
 	verificador=l;
 	if(l==NULL){
 		return 0;
 	}else{
 		while(verificador!=NULL){
-			if(verificador->aviao->familia==letra){
-				if(verificador->aviao->passageiros==numPassageiro){
-					return verificador->garagem;
-				}
+			if(verificador->aviao->posicao==indice){
+				return verificador->garagem;
 			}else{
 				verificador=verificador->prox;
 			}
@@ -148,12 +150,12 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 		novo->passageiros=numPassageiro; 	
 		novo->posicao=indice +1; 
 		indice=novo->posicao;
-		if (l==NULL){
+		if (l->prox==NULL){
 			hangar = (Aeroporto*)malloc(sizeof(Aeroporto));
 			hangar->garagem=indice;
 			hangar->aviao=novo;
 			hangar->prox=NULL;
-			l=hangar;
+			l->prox=hangar;
 		}else{
 			garagemProx=l;
 			while(garagemProx->prox!=NULL){
@@ -170,11 +172,11 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	capacidade--;			
 	}
 }
-int remover (char letra, int numPassageiro, Aeroporto *l){
+int remover (int numPassageiro, Aeroporto *l){
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
-	resposta = consulta(letra, numPassageiro, l); 
+	resposta = consulta(indice, l); 
 	
 	if (resposta!=0){
 		garagemProx=l;
@@ -245,19 +247,26 @@ int ordenacao(Aeroporto *l){
 	return 1;
 }
 int main(){
-	//Aeroporto l;
-	//char letra;
-	//int numPassageiro,letra_num;//letra_num vai recer um numero decimal e passar para função ASCII converter para letra.	
-	//inicializarAeroporto(&l);
+	Aeroporto l;
+	char letra;
+	int letra_num=0; // recebe um numero decimal e transforma em letra atraves da tabela ascII
+	int indiceRemover; // recebe o indice que será removido
+	int numPassageiro;
+	inicializarAeroporto(&l);
+	imprime(&l);
 	while(true){
-		//letra_num=rand()%36+65;
-		//letra=funcaoASCII(letra_num);
-		//numPassageiro=rand()%800;
-		//remove();
-		//letra=rand()%36+65;
-		//numPassageiro=rand()%800;
-		//insere();
-		//ordena();
+		if(l.prox!=NULL){
+		printf("AQUI 2");
+		indiceRemover=rand()%+1;
+		remover(indiceRemover,&l);
+		}
+		printf("AQUI 3");
+		imprime(&l);
+		letra_num=rand()%36+65;
+		letra=funcaoASCII(letra_num);
+		numPassageiro=rand()%800;
+		insere(letra,numPassageiro,&l);
+		ordenacao(&l);
 		sleep(5);
 		//remove();
 		//insere();
