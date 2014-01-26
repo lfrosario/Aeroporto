@@ -6,7 +6,7 @@
 
 int capacidade = 20;
 int indice = 0;
-int posicaoAviao=0;  
+int posicaoAviao = 0;  
 
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
@@ -146,6 +146,7 @@ int consulta (char letra, int numPassageiro, Aeroporto *l) {
 	return 0;
 }
 
+//OK
 void insere (char letra, int numPassageiro, Aeroporto *l){
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
@@ -216,6 +217,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	return 0;
 }*/
 
+//OK
 void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
@@ -230,6 +232,7 @@ void imprime (Aeroporto *l) {
 
 }
 
+//OK
 int ordenacao(Aeroporto *l){
 	Aeroporto *prim, *seg, *ult;
 	ListaAviao *avi1, *avi2;
@@ -244,8 +247,6 @@ int ordenacao(Aeroporto *l){
 		ult = l;
 		while (ult->prox != NULL)
 			ult = ult->prox;
-		//for (ult = l; ult->prox != NULL; ult = ult->prox) {
-		//}
 		prim = l;
 		while (prim->prox != ult) {
 			seg = prim->prox;
@@ -253,26 +254,20 @@ int ordenacao(Aeroporto *l){
 			avi2 = seg->prox->aviao;
 			if (avi1->familia == avi2->familia && avi1->passageiros <= avi2->passageiros) { // São da mesma familia e comportam a mesma quantidade de passageiros
 				prim = prim->prox;
-				//imprime (l);
-			}/*else if(avi1->familia==avi2->familia && avi1->passageiros < avi2->passageiros){ // São da mesma familia e AV1 suporta menos passageiros do que AV2
-				prim=prim->prox;
-			}*/else if (avi1->familia == avi2->familia && avi1->passageiros > avi2->passageiros) {  // São da mesma familia e AV1 suporta mais passageiros do que AV2
+			} else if (avi1->familia == avi2->familia && avi1->passageiros > avi2->passageiros) {  // São da mesma familia e AV1 suporta mais passageiros do que AV2
 						prim->aviao = avi2;
 						seg->aviao = avi1;
 						prim = l;
-						//imprime (l);
 			} else if (avi1->familia < avi2->familia) { // São de familias diferente, sendo AV1  com letra menor que AV2
 						prim = prim->prox;
-						//imprime (l);	
 			} else if (avi1->familia > avi2->familia) {  // São de familias diferente, sendo AV1  com letra maior que AV2
 						prim->prox->aviao = avi2;
 						seg->prox->aviao = avi1;
 						prim = l;
-						//imprime (l);
 			}
 		}
-		printf ("\nAeroporto Ordenado!!!!!!\n");
 	}
+	printf ("\nAeroporto Ordenado!!!!!!\n");
 	return 1;
 }
 
