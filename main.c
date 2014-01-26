@@ -195,35 +195,71 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 
 
 int remover (int indiceAviao, Aeroporto *l){
-	Aeroporto *garagemProx, *auxiliar, *k;
+	Aeroporto *garagemRmv, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
 	resposta = consulta (indiceAviao, l); 
 	
 	if (resposta != 0){
-		garagemProx = l;
+		garagemRmv = l;
 		auxiliar = NULL;
-		while (garagemProx->prox != NULL) {
-			if (garagemProx->prox->garagem == resposta){	
-				auxiliar->prox = garagemProx->prox; 
-				if (auxiliar == NULL) //Primeiro elemento da lista
+		while (garagemRmv->prox != NULL) {
+			if (garagemRmv->prox->garagem == resposta){	
+				auxiliar = garagemRmv->prox; 
+				if (auxiliar->garagem == 1){ //Primeiro elemento da lista
 					l->prox = auxiliar->prox;
-				aviaoRm = garagemProx->aviao;
+				aviaoRm = auxiliar->aviao;
 				free (aviaoRm); 
-				free (garagemProx);
-				for (k = auxiliar->prox; k != NULL; k = k->prox){
+				free (auxiliar);
+				} else if(auxiliar->garagem !=1) {
+				garagemRmv->prox=auxiliar->prox; 
+				aviaoRm=auxiliar->aviao;
+				free(aviaoRm); 
+				free(auxiliar);
+				}
+				for (k = l->prox; k != NULL; k = k->prox){
 					k->garagem = k->garagem-1; 
 				}
 				printf ("\nAviao Removido!!!!!!!\n");
 				return 1;
-			} else { 
-				auxiliar = garagemProx;
-				garagemProx = garagemProx->prox;
+			} else {
+			
+				auxiliar = garagemRmv->prox;
+				garagemRmv = garagemRmv->prox;
 			}
 		}
 	}
 	return 0;
 }
+
+/*int remover (int numPassageiro, Aeroporto *l){
+	Aeroporto *garagemProx, *auxiliar, *k;
+	ListaAviao *aviaoRm; 
+	int resposta;
+	resposta = consulta(indice, l); 
+	
+	if (resposta!=0){
+		garagemRmv=l;
+		auxiliar=NULL;
+		while(garagemRmgaragemRmvv->prox!=NULL){
+			if (garagemRmv->garagem==resposta){	
+				auxiliar->prox=garagemRmv->prox; 
+				aviaoRm=garagemRmv->aviao;
+				free(aviaoRm); 
+				free(garagemRmv);
+				for(k=auxiliar->prox; k!=NULL; k=k->prox){
+					k->garagem = k->garagem-1; 
+				}
+				return 1;
+			}else{ 
+				auxiliar = garagemRmv;
+				garagemProx=garagemRmv->prox;
+			}
+		}
+	}
+	return 0;
+}
+*/
 
 //OK
 void imprime (Aeroporto *l) {
@@ -289,7 +325,7 @@ int main(){
 	inicializarAeroporto(&l);
 	insere ('c', 3, &l);
 	insere ('b', 4, &l);
-	insere ('a', 5, &l);
+	insere ('z', 5, &l);
 	insere ('a', 6, &l);
 	insere ('a', 7, &l);
 	insere ('a', 8, &l);
