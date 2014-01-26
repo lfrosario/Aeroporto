@@ -1,20 +1,8 @@
 #include "matd04.h"
 
 int capacidade = 20;
-int indice = 1; // Numero de garagem do Aeroporto
-int posicaoAviao = 0; // Numero de Aviões no aeroporto 
-
-typedef struct Aeroporto {
-	struct ListaAviao *aviao;
-	struct Aeroporto *prox;
-	int garagem;  //Idenficador da Garagem
-}Aeroporto;
-
-typedef struct ListaAviao {
-	char familia;
-	int passageiros;
-	int posicao;  //Identificação do avião conforme ordem de pouso
-}ListaAviao;
+int qtdGaragem = 1; // Numero de garagem do Aeroporto
+int qtdAviao = 0; // Numero de Aviões no aeroporto 
 
 void inicializarAeroporto (Aeroporto *l) {
 	l->prox = NULL;
@@ -145,16 +133,16 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 		novo = (ListaAviao*) malloc (sizeof(ListaAviao));
 		novo->familia = letra;
 		novo->passageiros = numPassageiro; 	
-		novo->posicao = posicaoAviao + 1;
-		posicaoAviao = novo->posicao;
+		novo->posicao = qtdAviao + 1;
+		qtdAviao = novo->posicao;
 		
 		if (l->prox == NULL) { //Insercao em Lista Vazia
 			hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
-			hangar->garagem = indice;
+			hangar->garagem = qtdGaragem;
 			hangar->aviao = novo;
 			hangar->prox = NULL;
 			l->prox = hangar;
-			indice = hangar->garagem + 1;
+			qtdGaragem = hangar->garagem + 1;
 		} else { 
 			garagemProx = l; // Uma copia de l nada mais!!!
 			while (garagemProx->prox != NULL) {	//LOOP para alcançar ultima posição da lista			
@@ -162,11 +150,11 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 			}
 			if (garagemProx != NULL && garagemProx->prox == NULL) { 
 				hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
-				hangar->garagem = indice; 
+				hangar->garagem = qtdGaragem; 
 				hangar->aviao = novo; 
 				hangar->prox = NULL;
 				garagemProx->prox = hangar; 
-				indice = hangar->garagem + 1;
+				qtdGaragem = hangar->garagem + 1;
 			}
 		}
 	capacidade--;
@@ -191,15 +179,17 @@ int remover (int indiceRemover, Aeroporto *l){
 				if (auxiliar->garagem == 1){ //Primeiro elemento da lista
 					l->prox = auxiliar->prox;
 				aviaoRm = auxiliar->aviao;
-				free (aviaoRm); 
 				} else if(auxiliar->garagem !=1) {
 				garagemRmv->prox=auxiliar->prox; 
 				aviaoRm=auxiliar->aviao;
-				free(aviaoRm); 
 				}
 				for (k = auxiliar->prox; k != NULL; k = k->prox)
-					k->garagem = k->garagem-1; 
-				
+					k->garagem = k->garagem-1;
+				for (k = l->prox; k != NULL; k = k->prox){
+					if(k->aviao->posicao > aviaoRm->posicao)
+					k->aviao->posicao = k->aviao->posicao-1;  
+				}
+				free(aviaoRm);
 				free(auxiliar);
 				printf ("\nAviao Removido!!!!!!!\n");
 				return 1;
@@ -209,6 +199,7 @@ int remover (int indiceRemover, Aeroporto *l){
 			}
 		}
 	}
+	qtdAviao --;
 	return 0;
 }
 void imprime (Aeroporto *l) {
@@ -275,14 +266,16 @@ int main(){
 	insere ('z', 5, &l);
 	insere ('a', 6, &l);
 	insere ('a', 7, &l);
-	insere ('a', 8, &l);
+	insere ('a', 8, &l);//6
+	//ordenacao  (&l);
 	imprime (&l);
-	remover (6, &l);
+	printf("Contador Avião: %d /n", qtdAviao);
+	remover (1, &l);
 	imprime (&l);
 	ordenacao  (&l);
 	imprime (&l);
 		
-/*	while(true){ 
+/*while(true){ 
 		if(l.prox!=NULL){
 		printf("AQUI 2");
 		indiceRemover=rand()%+1;
