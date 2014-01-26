@@ -5,8 +5,8 @@
 #include <unistd.h>
 
 int capacidade = 20;
-int indice = 1;
-int posicaoAviao = 0;  
+int indice = 1; // Numero de garagem do Aeroporto
+int posicaoAviao = 0; // Numero de Aviões no aeroporto 
 
 typedef struct Aeroporto {
 	struct ListaAviao *aviao;
@@ -148,12 +148,8 @@ int consulta (int indiceAviao, Aeroporto *l){
 void insere (char letra, int numPassageiro, Aeroporto *l) {
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
-	int resposta;
 	
-	//resposta = consulta (letra, numPassageiro, l);
-	//printf ("Consultado\n");
-	
-	if (/*resposta == 0 && */capacidade > 0) {
+	if (capacidade > 0) {
 		novo = (ListaAviao*) malloc (sizeof(ListaAviao));
 		novo->familia = letra;
 		novo->passageiros = numPassageiro; 	
@@ -193,34 +189,37 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 	printf ("Inserido\n");
 }
 
-
-int remover (int indiceAviao, Aeroporto *l){
+int remover (int indiceRemover, Aeroporto *l){
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
-	resposta = consulta (indiceAviao, l); 
+	resposta = consulta (indiceRemover, l); 
 	
 	if (resposta != 0){
 		garagemProx = l;
 		auxiliar = NULL;
 		while (garagemProx->prox != NULL) {
 			if (garagemProx->prox->garagem == resposta){	
-				auxiliar->prox = garagemProx->prox; 
-				if (auxiliar == NULL) //Primeiro elemento da lista
+				auxiliar = garagemProx->prox; 
+				if (auxiliar->garagem == 1) //Primeiro elemento da lista
 					l->prox = auxiliar->prox;
-				aviaoRm = garagemProx->aviao;
-				free (aviaoRm); 
-				free (garagemProx);
-				for (k = auxiliar->prox; k != NULL; k = k->prox){
-					k->garagem = k->garagem-1; 
+				aviaoRm = auxiliar->aviao;
+				free (aviaoRm);
+				k = auxiliar;
+				while (k != NULL) {
+				 	k->garagem = k->garagem - 1;
+					k = k->prox;
 				}
+				//for (k = auxiliar; k != NULL; k = k->prox)
+					//	k->garagem = k->garagem - 1;
+				free (auxiliar);
 				printf ("\nAviao Removido!!!!!!!\n");
 				return 1;
 			} else { 
 				auxiliar = garagemProx;
 				garagemProx = garagemProx->prox;
 			}
-		}
+		}//Fim While
 	}
 	return 0;
 }
@@ -293,8 +292,6 @@ int main(){
 	insere ('a', 6, &l);
 	insere ('a', 7, &l);
 	insere ('a', 8, &l);
-	imprime (&l);
-	ordenacao (&l);
 	imprime (&l);
 	remover (1, &l);
 	imprime (&l);
