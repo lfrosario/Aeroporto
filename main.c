@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 int capacidade = 20;
-int indice = 0;
+int indice = 1;
 int posicaoAviao = 0;  
 
 typedef struct Aeroporto {
@@ -121,22 +121,22 @@ void inicializarAeroporto (Aeroporto *l) {
 	}
 } */
 
-int consulta(int indice, Aeroporto *l){
+int consulta (int indiceAviao, Aeroporto *l){
 	
 	//clockPorSegundo ini = clock(); //clock_t
 	Aeroporto *verificador;
-	verificador=l;
-	if(l==NULL){
+	verificador = l;
+	if (l->prox == NULL) {
 		return 0;
-	}else{
-		while(verificador!=NULL){
-			if(verificador->aviao->posicao==indice){
-				return verificador->garagem;
+	} else {
+		while (verificador->prox != NULL) {
+			if (verificador->prox->aviao->posicao == indiceAviao){
+				return verificador->prox->garagem;
 			}else{
-				verificador=verificador->prox;
+				verificador = verificador->prox;
 			}
 		}
-		if(verificador==NULL){
+		if (verificador == NULL){
 			return 0;
 		}
 	}
@@ -145,7 +145,7 @@ int consulta(int indice, Aeroporto *l){
 }
 
 //OK
-void insere (char letra, int numPassageiro, Aeroporto *l){
+void insere (char letra, int numPassageiro, Aeroporto *l) {
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
 	int resposta;
@@ -157,15 +157,18 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 		novo = (ListaAviao*) malloc (sizeof(ListaAviao));
 		novo->familia = letra;
 		novo->passageiros = numPassageiro; 	
-		novo->posicao = indice + 1; 
-		indice = novo->posicao;
+		novo->posicao = posicaoAviao + 1;
+		posicaoAviao = novo->posicao;
 		
 		if (l->prox == NULL) { //Insercao Lista Vazia
 			hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
 			hangar->garagem = indice;
+			printf ("\nHangar: %d\n", hangar->garagem);
 			hangar->aviao = novo;
 			hangar->prox = NULL;
 			l->prox = hangar;
+			indice = hangar->garagem + 1;
+			printf ("\nIndice: %d\n", indice);
 			//TESTAR AQUI AS FUNCIONSALIDADE DAS ESTRUTURAS			
 		} else {
 			garagemProx = l; // Uma copia de l nada mais!!!
@@ -175,42 +178,47 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 			if (garagemProx != NULL && garagemProx->prox == NULL) { // Qual insercao eh essa???
 				hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
 				hangar->garagem = indice; // adicionando o mesmo indice novamente?
+				printf ("\nHangar: %d\n", hangar->garagem);
 				hangar->aviao = novo; // apontando para o mesmo novo do outro hangar?
 				hangar->prox = NULL;
 				garagemProx->prox = hangar; //Criou novo Aeroporto com Aviao!
+				indice = hangar->garagem + 1;
+				printf ("\nIndice: %d\n", indice);
 			}
 		}
-	capacidade--;			
+	capacidade--;
 	} else {
 		printf ("Lista Cheia!!! \n");
 	}
 	printf ("Inserido\n");
 }
 
-int remover (int numPassageiro, Aeroporto *l){
+
+int remover (int indiceAviao, Aeroporto *l){
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
-	resposta = consulta(indice, l); 
+	resposta = consulta (indiceAviao, l); 
 	
-	if (resposta!=0){
-		garagemProx=l;
-		auxiliar=NULL;
-		while(garagemProx->prox!=NULL){
-			if (garagemProx->garagem==resposta){	
-				auxiliar->prox=garagemProx->prox; 
+	if (resposta != 0){
+		garagemProx = l;
+		auxiliar = NULL;
+		while (garagemProx->prox != NULL) {
+			if (garagemProx->prox->garagem == resposta){	
+				auxiliar->prox = garagemProx->prox; 
 				if (auxiliar == NULL) //Primeiro elemento da lista
-					l->prox=auxiliar->prox;
-				aviaoRm=garagemProx->aviao;
-				free(aviaoRm); 
-				free(garagemProx);
-				for(k=auxiliar->prox; k!=NULL; k=k->prox){
+					l->prox = auxiliar->prox;
+				aviaoRm = garagemProx->aviao;
+				free (aviaoRm); 
+				free (garagemProx);
+				for (k = auxiliar->prox; k != NULL; k = k->prox){
 					k->garagem = k->garagem-1; 
 				}
+				printf ("\nAviao Removido!!!!!!!\n");
 				return 1;
-			}else{ 
+			} else { 
 				auxiliar = garagemProx;
-				garagemProx=garagemProx->prox;
+				garagemProx = garagemProx->prox;
 			}
 		}
 	}
@@ -226,9 +234,10 @@ void imprime (Aeroporto *l) {
 		printf ("\n LISTA VAZIA\n");
 
 	while (listar->prox != NULL) {
-		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->prox->aviao->familia, listar->prox->aviao->passageiros);
+		printf ("\nAeroporto: %d Familia: %c Passageiros: %d Posicao Aviao: %d\n", listar->prox->garagem,  listar->prox->aviao->familia, listar->prox->aviao->passageiros, listar->prox->aviao->posicao);
 		listar = listar->prox;
 	}
+	printf ("\nImprimido!!!!!\n");
 
 }
 
@@ -281,7 +290,13 @@ int main(){
 	insere ('c', 3, &l);
 	insere ('b', 4, &l);
 	insere ('a', 5, &l);
+	insere ('a', 6, &l);
+	insere ('a', 7, &l);
+	insere ('a', 8, &l);
+	imprime (&l);
 	ordenacao (&l);
+	imprime (&l);
+	remover (1, &l);
 	imprime (&l);
 	//
 	//imprime (&l);
