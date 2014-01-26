@@ -121,29 +121,27 @@ void inicializarAeroporto (Aeroporto *l) {
 	}
 } */
 
-int consulta (char letra, int numPassageiro, Aeroporto *l) {
-	Aeroporto *verificador;
-	verificador = l;
+int consulta(int indice, Aeroporto *l){
 	
-	if (l->prox == NULL) {
-		printf ("0\n");
+	//clockPorSegundo ini = clock(); //clock_t
+	Aeroporto *verificador;
+	verificador=l;
+	if(l==NULL){
 		return 0;
-	} else {
-		while (verificador->prox != NULL) {
-			if (verificador->aviao->posicao == indice){
-				printf ("1\n");
+	}else{
+		while(verificador!=NULL){
+			if(verificador->aviao->posicao==indice){
 				return verificador->garagem;
-			} else {
-				verificador = verificador->prox;
+			}else{
+				verificador=verificador->prox;
 			}
 		}
-		if (verificador == NULL) {
-			printf ("2\n");
+		if(verificador==NULL){
 			return 0;
 		}
 	}
-	printf ("3\n");
 	return 0;
+	//printf("\nFuncao executou em %f segundos\n", ((double)clock() - ini) / CLOCKS_PER_SEC);
 }
 
 void insere (char letra, int numPassageiro, Aeroporto *l){
@@ -188,7 +186,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 	printf ("Inserido\n");
 }
 
-/*int remover (int numPassageiro, Aeroporto *l){
+int remover (int numPassageiro, Aeroporto *l){
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
@@ -200,6 +198,8 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 		while(garagemProx->prox!=NULL){
 			if (garagemProx->garagem==resposta){	
 				auxiliar->prox=garagemProx->prox; 
+				if (auxiliar == NULL) //Primeiro elemento da lista
+					l->prox=auxiliar->prox;
 				aviaoRm=garagemProx->aviao;
 				free(aviaoRm); 
 				free(garagemProx);
@@ -214,7 +214,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l){
 		}
 	}
 	return 0;
-}*/
+}
 
 void imprime (Aeroporto *l) {
 	Aeroporto *listar;
