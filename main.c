@@ -258,7 +258,7 @@ int buscarAviao (int indiceAviao, Aeroporto *l){
 	buscador = l;
 	
 	if (l->prox == NULL) {
-		printf("Não possuem aviões no Aeroporto!");
+		printf("Nao possuem avioes no Aeroporto!");
 		return 0;
 	} else {
 		while (buscador->prox != NULL) {
@@ -290,11 +290,11 @@ int main(){
 	insere ('a', 8, &l); //6
 	//ordenacao  (&l);
 	imprime (&l);
-	printf("Contador Avião: %d \n", qtdAviao);
+	printf("Contador capacidade: %d \n", capacidade);
 	buscarAviao(5,&l);
 	remover (1, &l);
 	imprime (&l);
-	printf("Contador Avião: %d \n", qtdAviao);
+	printf("Contador capacidade: %d \n", capacidade);
 	ordenacao  (&l);
 	imprime (&l);
 		
