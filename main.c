@@ -25,7 +25,8 @@ void inicializarAeroporto (Aeroporto *l) {
 	l->aviao=NULL;
 	l->garagem=0;
 }
-char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
+
+/*char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 	char letra;
 	if(x < 78){
 		if(x < 72){
@@ -118,60 +119,76 @@ char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 				}
 			}
 	}
-}
-int consulta(int indice, Aeroporto *l){
+} */
+
+int consulta (char letra, int numPassageiro, Aeroporto *l) {
 	Aeroporto *verificador;
-	verificador=l;
-	if(l==NULL){
+	verificador = l;
+	
+	if (l->prox == NULL) {
+		printf ("0\n");
 		return 0;
-	}else{
-		while(verificador!=NULL){
-			if(verificador->aviao->posicao==indice){
+	} else {
+		while (verificador->prox != NULL) {
+			if (verificador->aviao->posicao == indice){
+				printf ("1\n");
 				return verificador->garagem;
-			}else{
-				verificador=verificador->prox;
+			} else {
+				verificador = verificador->prox;
 			}
 		}
-		if(verificador==NULL){
+		if (verificador == NULL) {
+			printf ("2\n");
 			return 0;
 		}
 	}
+	printf ("3\n");
 	return 0;
 }
+
 void insere (char letra, int numPassageiro, Aeroporto *l){
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
-	//int resposta;
-	//resposta = consulta(letra,numPassageiro,l);
-	if (/*resposta == 0 && */capacidade > 0){
-		novo = (ListaAviao*)malloc(sizeof(ListaAviao));
-		novo->familia=letra;
-		novo->passageiros=numPassageiro; 	
-		novo->posicao=indice +1; 
-		indice=novo->posicao;
-		if (l->prox==NULL){
-			hangar = (Aeroporto*)malloc(sizeof(Aeroporto));
-			hangar->garagem=indice;
-			hangar->aviao=novo;
-			hangar->prox=NULL;
-			l->prox=hangar;
-		}else{
-			garagemProx=l;
-			while(garagemProx->prox!=NULL){
-				garagemProx=garagemProx->prox;
+	int resposta;
+	
+	//resposta = consulta (letra, numPassageiro, l);
+	//printf ("Consultado\n");
+	
+	if (/*resposta == 0 && */capacidade > 0) {
+		novo = (ListaAviao*) malloc (sizeof(ListaAviao));
+		novo->familia = letra;
+		novo->passageiros = numPassageiro; 	
+		novo->posicao = indice + 1; 
+		indice = novo->posicao;
+		
+		if (l->prox == NULL) { //Insercao Lista Vazia
+			hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
+			hangar->garagem = indice;
+			hangar->aviao = novo;
+			hangar->prox = NULL;
+			l->prox = hangar;
+			//TESTAR AQUI AS FUNCIONSALIDADE DAS ESTRUTURAS			
+		} else {
+			garagemProx = l; // Uma copia de l nada mais!!!
+			while (garagemProx->prox != NULL) {			
+				garagemProx = garagemProx->prox;
 			}
-			if(garagemProx!=NULL && garagemProx->prox==NULL){
-				hangar = (Aeroporto*)malloc(sizeof(Aeroporto));
-				hangar->garagem=indice;
-				hangar->aviao=novo;
-				hangar->prox=NULL;
-				garagemProx->prox=hangar;
+			if (garagemProx != NULL && garagemProx->prox == NULL) { // Qual insercao eh essa???
+				hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
+				hangar->garagem = indice; // adicionando o mesmo indice novamente?
+				hangar->aviao = novo; // apontando para o mesmo novo do outro hangar?
+				hangar->prox = NULL;
+				garagemProx->prox = hangar; //Criou novo Aeroporto com Aviao!
 			}
 		}
 	capacidade--;			
+	} else {
+		printf ("Lista Cheia!!! \n");
 	}
+	printf ("Inserido\n");
 }
-int remover (int numPassageiro, Aeroporto *l){
+
+/*int remover (int numPassageiro, Aeroporto *l){
 	Aeroporto *garagemProx, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
@@ -197,7 +214,8 @@ int remover (int numPassageiro, Aeroporto *l){
 		}
 	}
 	return 0;
-}
+}*/
+
 void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
@@ -206,56 +224,72 @@ void imprime (Aeroporto *l) {
 		printf ("\n LISTA VAZIA\n");
 
 	while (listar->prox != NULL) {
-		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem/*,  listar->aviao->familia, listar->aviao->passageiros*/);
+		printf ("\nAeroporto: %d Familia: %c Passageiros: %d \n", listar->garagem,  listar->prox->aviao->familia, listar->prox->aviao->passageiros);
 		listar = listar->prox;
 	}
 
 }
+
 int ordenacao(Aeroporto *l){
 	Aeroporto *prim, *seg, *ult;
 	ListaAviao *avi1, *avi2;
-	prim=seg=ult=NULL;
-	avi1=avi2=NULL;
-	prim=NULL;
-	if(l==NULL){
-		printf("Aeroporto Vazio \n");
+	
+	prim = seg = ult = NULL;
+	avi1 = avi2= NULL;
+	
+	if (l->prox == NULL) {
+		printf ("Aeroporto Vazio \n");
 		return 0;
-	}else{
-		for(ult=l;ult->prox!=NULL;ult=ult->prox){
-		}
-		prim=l;
-		while(prim!=ult){
-			seg=prim->prox;
-			avi1=prim->aviao;
-			avi2=seg->aviao;
-			if(avi1->familia == avi2->familia && avi1->passageiros <= avi2->passageiros){ // São da mesma familia e comportam a mesma quantidade de passageiros
-			prim=prim->prox;	
+	} else {
+		ult = l;
+		while (ult->prox != NULL)
+			ult = ult->prox;
+		//for (ult = l; ult->prox != NULL; ult = ult->prox) {
+		//}
+		prim = l;
+		while (prim->prox != ult) {
+			seg = prim->prox;
+			avi1 = prim->prox->aviao;
+			avi2 = seg->prox->aviao;
+			if (avi1->familia == avi2->familia && avi1->passageiros <= avi2->passageiros) { // São da mesma familia e comportam a mesma quantidade de passageiros
+				prim = prim->prox;
+				//imprime (l);
 			}/*else if(avi1->familia==avi2->familia && avi1->passageiros < avi2->passageiros){ // São da mesma familia e AV1 suporta menos passageiros do que AV2
 				prim=prim->prox;
-			}*/else if(avi1->familia==avi2->familia && avi1->passageiros >avi2->passageiros){  // São da mesma familia e AV1 suporta mais passageiros do que AV2
-					prim->aviao=avi2;
-					seg->aviao=avi1;
-					prim=l;
-			}else if(avi1->familia < avi2->familia){ // São de familias diferente, sendo AV1  com letra menor que AV2
-			prim=prim->prox;	
-			}else if(avi1->familia > avi2->familia){  // São de familias diferente, sendo AV1  com letra maior que AV2
-					prim->aviao=avi2;
-					seg->aviao=avi1;
-					prim=l;
+			}*/else if (avi1->familia == avi2->familia && avi1->passageiros > avi2->passageiros) {  // São da mesma familia e AV1 suporta mais passageiros do que AV2
+						prim->aviao = avi2;
+						seg->aviao = avi1;
+						prim = l;
+						//imprime (l);
+			} else if (avi1->familia < avi2->familia) { // São de familias diferente, sendo AV1  com letra menor que AV2
+						prim = prim->prox;
+						//imprime (l);	
+			} else if (avi1->familia > avi2->familia) {  // São de familias diferente, sendo AV1  com letra maior que AV2
+						prim->prox->aviao = avi2;
+						seg->prox->aviao = avi1;
+						prim = l;
+						//imprime (l);
 			}
 		}
+		printf ("\nAeroporto Ordenado!!!!!!\n");
 	}
 	return 1;
 }
+
 int main(){
 	Aeroporto l;
-	char letra;
-	int letra_num=0; // recebe um numero decimal e transforma em letra atraves da tabela ascII
-	int indiceRemover; // recebe o indice que será removido
-	int numPassageiro;
+	//char letra;
+	//int letra_num=0; // recebe um numero decimal e transforma em letra atraves da tabela ascII
+	//int indiceRemover; // recebe o indice que será removido
+	//int numPassageiro;
 	inicializarAeroporto(&l);
-	insere ('a', 3, &l);
-	imprime(&l);
+	insere ('c', 3, &l);
+	insere ('b', 4, &l);
+	insere ('a', 5, &l);
+	ordenacao (&l);
+	imprime (&l);
+	//
+	//imprime (&l);
 /*	while(true){ 
 		if(l.prox!=NULL){
 		printf("AQUI 2");
