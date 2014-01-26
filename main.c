@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <time.h>
 
 int capacidade = 20;
 int indice = 1; // Numero de garagem do Aeroporto
@@ -123,7 +124,7 @@ void inicializarAeroporto (Aeroporto *l) {
 
 int consulta (int indiceAviao, Aeroporto *l){
 	
-	//clockPorSegundo ini = clock(); //clock_t
+	clock_t ini = clock(); //clock_t
 	Aeroporto *verificador;
 	verificador = l;
 	if (l->prox == NULL) {
@@ -141,7 +142,7 @@ int consulta (int indiceAviao, Aeroporto *l){
 		}
 	}
 	return 0;
-	//printf("\nFuncao executou em %f segundos\n", ((double)clock() - ini) / CLOCKS_PER_SEC);
+	printf("\nFuncao executou em %f segundos\n", ((double)clock() - ini) / CLOCKS_PER_SEC);
 }
 
 //OK
@@ -189,14 +190,10 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 	printf ("Inserido\n");
 }
 
-<<<<<<< HEAD
 
-int remover (int indiceAviao, Aeroporto *l){
-	Aeroporto *garagemRmv, *auxiliar, *k;
-=======
+
 int remover (int indiceRemover, Aeroporto *l){
-	Aeroporto *garagemProx, *auxiliar, *k;
->>>>>>> e0890abb3f2e9468f9948baf334e22991f5e3300
+	Aeroporto *garagemRmv, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
 	int resposta;
 	resposta = consulta (indiceRemover, l); 
@@ -204,7 +201,7 @@ int remover (int indiceRemover, Aeroporto *l){
 	if (resposta != 0){
 		garagemRmv = l;
 		auxiliar = NULL;
-<<<<<<< HEAD
+
 		while (garagemRmv->prox != NULL) {
 			if (garagemRmv->prox->garagem == resposta){	
 				auxiliar = garagemRmv->prox; 
@@ -212,36 +209,20 @@ int remover (int indiceRemover, Aeroporto *l){
 					l->prox = auxiliar->prox;
 				aviaoRm = auxiliar->aviao;
 				free (aviaoRm); 
-				free (auxiliar);
+				//free (auxiliar);
 				} else if(auxiliar->garagem !=1) {
 				garagemRmv->prox=auxiliar->prox; 
 				aviaoRm=auxiliar->aviao;
 				free(aviaoRm); 
-				free(auxiliar);
+				//free(auxiliar);
 				}
-				for (k = l->prox; k != NULL; k = k->prox){
+				for (k = auxiliar->prox; k != NULL; k = k->prox)
 					k->garagem = k->garagem-1; 
-=======
-		while (garagemProx->prox != NULL) {
-			if (garagemProx->prox->garagem == resposta){	
-				auxiliar = garagemProx->prox; 
-				if (auxiliar->garagem == 1) //Primeiro elemento da lista
-					l->prox = auxiliar->prox;
-				aviaoRm = auxiliar->aviao;
-				free (aviaoRm);
-				k = auxiliar;
-				while (k != NULL) {
-				 	k->garagem = k->garagem - 1;
-					k = k->prox;
->>>>>>> e0890abb3f2e9468f9948baf334e22991f5e3300
-				}
-				//for (k = auxiliar; k != NULL; k = k->prox)
-					//	k->garagem = k->garagem - 1;
-				free (auxiliar);
+				
+				free(auxiliar);
 				printf ("\nAviao Removido!!!!!!!\n");
 				return 1;
-			} else {
-			
+				}else {
 				auxiliar = garagemRmv->prox;
 				garagemRmv = garagemRmv->prox;
 			}
@@ -348,7 +329,7 @@ int main(){
 	insere ('a', 7, &l);
 	insere ('a', 8, &l);
 	imprime (&l);
-	remover (1, &l);
+	remover (6, &l);
 	imprime (&l);
 	//
 	//imprime (&l);
