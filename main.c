@@ -282,7 +282,7 @@ int main(){
 	//int indiceRemover; // recebe o indice que será removido
 	//int numPassageiro;
 	
-	double timingDanilo = omp_get_wtime();
+	double timingDanilo = omp_get_wtime(); // precisa do paramentro -fopenmp na compilacao
 	inicializarAeroporto(&l);
 	insere ('c', 3, &l);
 	insere ('b', 4, &l);
