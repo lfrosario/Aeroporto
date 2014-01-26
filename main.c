@@ -26,8 +26,8 @@ void inicializarAeroporto (Aeroporto *l) {
 	l->aviao=NULL;
 	l->garagem=0;
 }
-
-/*char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
+/*
+char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 	char letra;
 	if(x < 78){
 		if(x < 72){
@@ -120,8 +120,8 @@ void inicializarAeroporto (Aeroporto *l) {
 				}
 			}
 	}
-} */
-
+} 
+*/
 int consulta (int indiceAviao, Aeroporto *l){
 	
 	clock_t ini = clock(); //clock_t
@@ -166,7 +166,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 			l->prox = hangar;
 			indice = hangar->garagem + 1;
 			printf ("\nIndice: %d\n", indice);
-			//TESTAR AQUI AS FUNCIONSALIDADE DAS ESTRUTURAS			
+			//TESTAR AQUI AS FUNCIONALIDADE DAS ESTRUTURAS			
 		} else {
 			garagemProx = l; // Uma copia de l nada mais!!!
 			while (garagemProx->prox != NULL) {			
@@ -209,12 +209,10 @@ int remover (int indiceRemover, Aeroporto *l){
 					l->prox = auxiliar->prox;
 				aviaoRm = auxiliar->aviao;
 				free (aviaoRm); 
-				//free (auxiliar);
 				} else if(auxiliar->garagem !=1) {
 				garagemRmv->prox=auxiliar->prox; 
 				aviaoRm=auxiliar->aviao;
 				free(aviaoRm); 
-				//free(auxiliar);
 				}
 				for (k = auxiliar->prox; k != NULL; k = k->prox)
 					k->garagem = k->garagem-1; 
@@ -230,35 +228,6 @@ int remover (int indiceRemover, Aeroporto *l){
 	}
 	return 0;
 }
-
-/*int remover (int numPassageiro, Aeroporto *l){
-	Aeroporto *garagemProx, *auxiliar, *k;
-	ListaAviao *aviaoRm; 
-	int resposta;
-	resposta = consulta(indice, l); 
-	
-	if (resposta!=0){
-		garagemRmv=l;
-		auxiliar=NULL;
-		while(garagemRmgaragemRmvv->prox!=NULL){
-			if (garagemRmv->garagem==resposta){	
-				auxiliar->prox=garagemRmv->prox; 
-				aviaoRm=garagemRmv->aviao;
-				free(aviaoRm); 
-				free(garagemRmv);
-				for(k=auxiliar->prox; k!=NULL; k=k->prox){
-					k->garagem = k->garagem-1; 
-				}
-				return 1;
-			}else{ 
-				auxiliar = garagemRmv;
-				garagemProx=garagemRmv->prox;
-			}
-		}//Fim While
-	}
-	return 0;
-}
-*/
 
 //OK
 void imprime (Aeroporto *l) {
@@ -331,8 +300,9 @@ int main(){
 	imprime (&l);
 	remover (6, &l);
 	imprime (&l);
-	//
-	//imprime (&l);
+	ordenacao  (&l);
+	imprime (&l);
+		
 /*	while(true){ 
 		if(l.prox!=NULL){
 		printf("AQUI 2");
