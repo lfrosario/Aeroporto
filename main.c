@@ -158,6 +158,7 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 			}
 		}
 	capacidade--;
+	qtdAviao --;
 	} else {
 		printf ("Lista Cheia!!! \n");
 	}
@@ -253,7 +254,28 @@ int ordenacao(Aeroporto *l){
 	printf ("\nAeroporto Ordenado!!!!!!\n");
 	return 1;
 }
-
+int buscarAviao (int indiceAviao, Aeroporto *l){
+	Aeroporto *buscador;
+	buscador = l;
+	
+	if (l->prox == NULL) {
+		printf("Não possuem aviões no Aeroporto!");
+		return 0;
+	} else {
+		while (buscador->prox != NULL) {
+			if (buscador->prox->aviao->posicao == indiceAviao){
+				printf("Indice solicitado: %d, Familia do Avião: %c%d, Quantidade de passageiros: %d ", indiceAviao, buscador->prox->aviao->familia,buscador->prox->aviao->passageiros, buscador->prox->aviao->passageiros);
+				return 1;
+			}else{
+				buscador = buscador->prox;
+			}
+		}
+		if (buscador == NULL){
+			return 0;
+		}
+	}
+	return 0;
+}
 int main(){
 	Aeroporto l;
 	//char letra;
@@ -269,9 +291,11 @@ int main(){
 	insere ('a', 8, &l);//6
 	//ordenacao  (&l);
 	imprime (&l);
-	printf("Contador Avião: %d /n", qtdAviao);
+	printf("Contador Avião: %d \n", qtdAviao);
+	buscarAviao(5,&l);
 	remover (1, &l);
 	imprime (&l);
+	printf("Contador Avião: %d \n", qtdAviao);
 	ordenacao  (&l);
 	imprime (&l);
 		
