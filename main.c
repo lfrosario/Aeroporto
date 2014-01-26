@@ -281,6 +281,8 @@ int main(){
 	//int letra_num=0; // recebe um numero decimal e transforma em letra atraves da tabela ascII
 	//int indiceRemover; // recebe o indice que será removido
 	//int numPassageiro;
+	
+	double timingDanilo = omp_get_wtime();
 	inicializarAeroporto(&l);
 	insere ('c', 3, &l);
 	insere ('b', 4, &l);
@@ -297,6 +299,9 @@ int main(){
 	printf("Contador capacidade: %d \n", capacidade);
 	ordenacao  (&l);
 	imprime (&l);
+	
+	timingDanilo = omp_get_wtime() - timingDanilo;
+	printf ("%f\n",timingDanilo);
 		
 /*while(true){ 
 		if(l.prox!=NULL){
