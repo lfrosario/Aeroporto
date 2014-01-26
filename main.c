@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <time.h>
+#include "matd04.h"
 
 int capacidade = 20;
 int indice = 1; // Numero de garagem do Aeroporto
@@ -26,102 +21,100 @@ void inicializarAeroporto (Aeroporto *l) {
 	l->aviao=NULL;
 	l->garagem=0;
 }
-/*
 char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 	char letra;
-	if(x < 78){
-		if(x < 72){
-			if(x==65){
-				letra='A';
+	if (x < 78) {
+		if (x < 72) {
+			if (x==65) {
+				letra ='A';
 				return letra;
-			}else if(x==66){
-				letra='B';
+			} else if (x == 66) {
+				letra ='B';
 				return letra;
-			}else if(x==67){
-				letra='C';
+			} else if (x == 67) {
+				letra ='C';
 				return letra;
-			}else if(x==68){
-				letra='D';
+			} else if (x == 68) {
+				letra ='D';
 				return letra;
-			}else if(x==69){
-				letra='E';
+			} else if (x == 69) {
+				letra ='E';
 				return letra;
-			}else if(x==70){
-				letra='F';
+			} else if (x == 70) {
+				letra ='F';
 				return letra;
-			}else if(x==71){
-				letra='G';
-				return letra;
-			}
-		}else{
-			if(x==72){
-				letra='H';
-				return letra;
-			}else if(x==73){
-				letra='I';
-				return letra;
-			}else if(x==74){
-				letra='J';
-				return letra;
-			}else if(x==75){
-				letra='K';
-				return letra;
-			}else if(x==76){
-				letra='L';
-				return letra;
-			}else if(x==77){
-				letra='M';
+			} else if (x == 71) {
+				letra ='G';
 				return letra;
 			}
+		} else {
+			if (x == 72) {
+				letra ='H';
+				return letra;
+			} else if (x == 73) {
+				letra ='I';
+				return letra;
+			} else if (x == 74) {
+				letra ='J';
+				return letra;
+			} else if (x == 75) {
+				letra ='K';
+				return letra;
+			} else if (x == 76) {
+				letra ='L';
+				return letra;
+			} else if (x == 77) {
+				letra ='M';
+				return letra;
 			}
-		}else{
+		}
+		} else {
 			if(x < 85){
-				if(x==78){
-					letra='N';
+				if(x == 78) {
+					letra ='N';
 					return letra;
-				}else if(x==79){
-					letra='O';
+				} else if (x == 79) {
+					letra ='O';
 					return letra;
-				}else if(x==80){
-					letra='P';
+				} else if (x == 80) {
+					letra ='P';
 					return letra;
-				}else if(x==81){
-					letra='Q';
+				} else if (x == 81) {
+					letra ='Q';
 					return letra;
-				}else if(x==82){
-					letra='R';
+				} else if (x == 82) {
+					letra ='R';
 					return letra;
-				}else if(x==83){
-					letra='S';
+				} else if (x == 83) {
+					letra ='S';
 					return letra;
-				}else if(x==84){
-					letra='T';
+				} else if (x == 84) {
+					letra ='T';
 					return letra;
 				}
 			}else{
-				if(x==85){
-					letra='U';
+				if (x == 85) {
+					letra ='U';
 					return letra;
-				}else if(x==86){
-					letra='V';
+				} else if (x == 86) {
+					letra ='V';
 					return letra;
-				}else if(x==87){
-					letra='W';
+				} else if (x == 87) {
+					letra ='W';
 					return letra;
-				}else if(x==88){
-					letra='X';
+				} else if (x == 88) {
+					letra ='X';
 					return letra;
-				}else if(x==89){
-					letra='Y';
+				} else if (x == 89) {
+					letra ='Y';
 					return letra;
-				}else if(x==90){
-					letra='Z';
+				} else if (x == 90) {
+					letra ='Z';
 					return letra;
 				}
 			}
 	}
 } 
-*/
 int consulta (int indiceAviao, Aeroporto *l){
 	
 	clock_t ini = clock(); //clock_t
@@ -144,8 +137,6 @@ int consulta (int indiceAviao, Aeroporto *l){
 	return 0;
 	printf("\nFuncao executou em %f segundos\n", ((double)clock() - ini) / CLOCKS_PER_SEC);
 }
-
-//OK
 void insere (char letra, int numPassageiro, Aeroporto *l) {
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
@@ -157,30 +148,25 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 		novo->posicao = posicaoAviao + 1;
 		posicaoAviao = novo->posicao;
 		
-		if (l->prox == NULL) { //Insercao Lista Vazia
+		if (l->prox == NULL) { //Insercao em Lista Vazia
 			hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
 			hangar->garagem = indice;
-			printf ("\nHangar: %d\n", hangar->garagem);
 			hangar->aviao = novo;
 			hangar->prox = NULL;
 			l->prox = hangar;
 			indice = hangar->garagem + 1;
-			printf ("\nIndice: %d\n", indice);
-			//TESTAR AQUI AS FUNCIONALIDADE DAS ESTRUTURAS			
-		} else {
+		} else { 
 			garagemProx = l; // Uma copia de l nada mais!!!
-			while (garagemProx->prox != NULL) {			
+			while (garagemProx->prox != NULL) {	//LOOP para alcançar ultima posição da lista			
 				garagemProx = garagemProx->prox;
 			}
-			if (garagemProx != NULL && garagemProx->prox == NULL) { // Qual insercao eh essa???
+			if (garagemProx != NULL && garagemProx->prox == NULL) { 
 				hangar = (Aeroporto*) malloc (sizeof(Aeroporto));
-				hangar->garagem = indice; // adicionando o mesmo indice novamente?
-				printf ("\nHangar: %d\n", hangar->garagem);
-				hangar->aviao = novo; // apontando para o mesmo novo do outro hangar?
+				hangar->garagem = indice; 
+				hangar->aviao = novo; 
 				hangar->prox = NULL;
-				garagemProx->prox = hangar; //Criou novo Aeroporto com Aviao!
+				garagemProx->prox = hangar; 
 				indice = hangar->garagem + 1;
-				printf ("\nIndice: %d\n", indice);
 			}
 		}
 	capacidade--;
@@ -189,9 +175,6 @@ void insere (char letra, int numPassageiro, Aeroporto *l) {
 	}
 	printf ("Inserido\n");
 }
-
-
-
 int remover (int indiceRemover, Aeroporto *l){
 	Aeroporto *garagemRmv, *auxiliar, *k;
 	ListaAviao *aviaoRm; 
@@ -228,8 +211,6 @@ int remover (int indiceRemover, Aeroporto *l){
 	}
 	return 0;
 }
-
-//OK
 void imprime (Aeroporto *l) {
 	Aeroporto *listar;
 	listar = l;
@@ -244,8 +225,6 @@ void imprime (Aeroporto *l) {
 	printf ("\nImprimido!!!!!\n");
 
 }
-
-//OK
 int ordenacao(Aeroporto *l){
 	Aeroporto *prim, *seg, *ult;
 	ListaAviao *avi1, *avi2;
