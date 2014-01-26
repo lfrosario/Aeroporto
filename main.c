@@ -105,7 +105,6 @@ char funcaoASCII(int x){ //Função que gera uma letra da tabela ASCII
 } 
 int consulta (int indiceAviao, Aeroporto *l){
 	
-	clock_t ini = clock(); //clock_t
 	Aeroporto *verificador;
 	verificador = l;
 	if (l->prox == NULL) {
@@ -123,8 +122,8 @@ int consulta (int indiceAviao, Aeroporto *l){
 		}
 	}
 	return 0;
-	printf("\nFuncao executou em %f segundos\n", ((double)clock() - ini) / CLOCKS_PER_SEC);
 }
+
 void insere (char letra, int numPassageiro, Aeroporto *l) {
 	ListaAviao *novo;
 	Aeroporto *garagemProx, *hangar;
@@ -179,7 +178,7 @@ int remover (int indiceRemover, Aeroporto *l){
 				if (auxiliar->garagem == 1){ //Primeiro elemento da lista
 					l->prox = auxiliar->prox;
 				aviaoRm = auxiliar->aviao;
-				} else if(auxiliar->garagem !=1) {
+				} else if(auxiliar->garagem !=1) { //Demais elementos 
 				garagemRmv->prox=auxiliar->prox; 
 				aviaoRm=auxiliar->aviao;
 				}
@@ -237,7 +236,7 @@ int ordenacao(Aeroporto *l){
 			avi2 = seg->prox->aviao;
 			if (avi1->familia == avi2->familia && avi1->passageiros <= avi2->passageiros) { // São da mesma familia e comportam a mesma quantidade de passageiros
 				prim = prim->prox;
-			} else if (avi1->familia == avi2->familia && avi1->passageiros > avi2->passageiros) {  // São da mesma familia e AV1 suporta mais passageiros do que AV2
+			} else if (avi1->familia == avi2->familia && avi1->passageiros > avi2->passageiros) { // São da mesma familia e AV1 suporta mais passageiros do que AV2
 						prim->aviao = avi2;
 						seg->aviao = avi1;
 						prim = l;
@@ -266,13 +265,13 @@ int main(){
 	insere ('z', 5, &l);
 	insere ('a', 6, &l);
 	insere ('a', 7, &l);
-	insere ('a', 8, &l);//6
+	insere ('a', 8, &l); //6
 	//ordenacao  (&l);
 	imprime (&l);
 	printf("Contador Avião: %d /n", qtdAviao);
 	remover (1, &l);
 	imprime (&l);
-	ordenacao  (&l);
+	ordenacao (&l);
 	imprime (&l);
 		
 /*while(true){ 
@@ -298,8 +297,7 @@ int main(){
 		//insere();
 		//insere();
 		//insere();
-		//ordena();
-		
+		//ordena();		
 	}*/
 return 0;
 }
